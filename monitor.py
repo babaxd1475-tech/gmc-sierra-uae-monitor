@@ -30,18 +30,18 @@ def send_telegram_message(text: str) -> bool:
         "disable_web_page_preview": False,
     }
     try:
-           r = requests.post(url, json=payload, timeout=30)
-           r.raise_for_status()
-           return True
-       except requests.exceptions.Timeout:
-           # Telegram's API sometimes processes the message before sending the HTTP
-           # response. The v0 test confirmed delivery despite a timeout, so we
-           # treat timeouts as soft success to avoid false failure reports.
-           print("Telegram timeout, but message was likely delivered.")
-           return True
-       except Exception as e:
-           print(f"Telegram error: {e}")
-           return False
+        r = requests.post(url, json=payload, timeout=30)
+        r.raise_for_status()
+        return True
+    except requests.exceptions.Timeout:
+        # Telegram's API sometimes processes the message before sending the HTTP
+        # response. v0 confirmed delivery despite a timeout, so we treat timeouts
+        # as soft success to avoid false failure reports.
+        print("Telegram timeout, but message was likely delivered.")
+        return True
+    except Exception as e:
+        print(f"Telegram error: {e}")
+        return False
 
 
 # --- Seen listings store ---
