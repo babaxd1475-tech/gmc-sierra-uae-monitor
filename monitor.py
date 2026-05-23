@@ -5,6 +5,11 @@ Sends Telegram alerts for each new listing, deduped via seen_listings.json.
 Runs every 15 minutes via GitHub Actions.
 """
 import os
+try:
+    from dotenv import load_dotenv
+    load_dotenv()
+except ImportError:
+    pass
 import re
 import sys
 import json
